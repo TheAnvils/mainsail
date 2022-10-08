@@ -1,21 +1,21 @@
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
+const { client } = require('./db.js');
 Sentry.init({
-  dsn: "",
-  tracesSampleRate: 1.0,
+  dsn: process.env.DSN,
+ tracesSampleRate: 1.0,
 });
-
 const transaction = Sentry.startTransaction({
   op: "test",
-  name: "My First Test Transaction",
+  name: "Server Start",
 });
-
-setTimeout(() => {
-  try {
-    foo();
+ try {
+    init();
   } catch (e) {
     Sentry.captureException(e);
   } finally {
     transaction.finish();
   }
-}, 99);
+function init() {
+  
+}
